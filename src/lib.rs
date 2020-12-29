@@ -1,3 +1,4 @@
+mod shapes;
 mod utils;
 
 use wasm_bindgen::prelude::*;
