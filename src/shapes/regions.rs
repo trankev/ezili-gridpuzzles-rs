@@ -1,15 +1,13 @@
 use super::cells;
 
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Debug, Eq, Ord, PartialEq, PartialOrd, serde::Serialize)]
 pub struct Region {
-    pub name: String,
     pub cells: Vec<cells::Cell>,
 }
 
 impl Region {
     fn row(position: isize, size: isize) -> Region {
         Region{
-            name: format!("row {}", position + 1),
             cells: (0..size).map(move |index| cells::Cell{x: index, y: position}).collect(),
         }
     }
@@ -20,7 +18,6 @@ impl Region {
 
     fn column(position: isize, size: isize) -> Region {
         Region{
-            name: format!("column {}", position + 1),
             cells: (0..size).map(|index| cells::Cell{x: position, y: index}).collect(),
         }
     }
@@ -29,9 +26,8 @@ impl Region {
         (0..count).map(move |index| Region::column(index, size))
     }
 
-    fn grid_box(v_offset: isize, h_offset: isize, width: isize, height: isize, name: String) -> Region {
+    fn grid_box(v_offset: isize, h_offset: isize, width: isize, height: isize) -> Region {
         Region {
-            name,
             cells: (0..width).flat_map(|x| (0..height).map(
                 move |y| cells::Cell{
                     x: v_offset * width + x,
@@ -43,8 +39,7 @@ impl Region {
 
     pub fn grid_boxes(v_count: isize, h_count: isize, width: isize, height: isize) -> impl Iterator<Item=Region> {
         (0..h_count).flat_map(move |h_offset| (0..v_count).map(move |v_offset| {
-            let name = format!("box {}", h_offset * h_count + v_offset + 1);
-            Region::grid_box(v_offset, h_offset, width, height, name)
+            Region::grid_box(v_offset, h_offset, width, height)
         }))
     }
 }
@@ -59,7 +54,6 @@ mod tests {
         let mut result = Region::rows(3, 3).collect::<Vec<_>>();
         let mut expected = vec![
             Region {
-                name: "row 1".to_string(),
                 cells: vec![
                     cells::Cell{x: 0, y: 0},
                     cells::Cell{x: 1, y: 0},
@@ -67,7 +61,6 @@ mod tests {
                 ],
             },
             Region {
-                name: "row 2".to_string(),
                 cells: vec![
                     cells::Cell{x: 0, y: 1},
                     cells::Cell{x: 1, y: 1},
@@ -75,7 +68,6 @@ mod tests {
                 ],
             },
             Region {
-                name: "row 3".to_string(),
                 cells: vec![
                     cells::Cell{x: 0, y: 2},
                     cells::Cell{x: 1, y: 2},
@@ -93,7 +85,6 @@ mod tests {
         let mut result = Region::columns(3, 3).collect::<Vec<_>>();
         let mut expected = vec![
             Region {
-                name: "column 1".to_string(),
                 cells: vec![
                     cells::Cell{x: 0, y: 0},
                     cells::Cell{x: 0, y: 1},
@@ -101,7 +92,6 @@ mod tests {
                 ],
             },
             Region {
-                name: "column 2".to_string(),
                 cells: vec![
                     cells::Cell{x: 1, y: 0},
                     cells::Cell{x: 1, y: 1},
@@ -109,7 +99,6 @@ mod tests {
                 ],
             },
             Region {
-                name: "column 3".to_string(),
                 cells: vec![
                     cells::Cell{x: 2, y: 0},
                     cells::Cell{x: 2, y: 1},
@@ -127,7 +116,6 @@ mod tests {
         let mut result = Region::grid_boxes(2, 2, 2, 2).collect::<Vec<_>>();
         let mut expected = vec![
             Region {
-                name: "box 1".to_string(),
                 cells: vec![
                     cells::Cell{x: 0, y: 0},
                     cells::Cell{x: 0, y: 1},
@@ -136,7 +124,6 @@ mod tests {
                 ],
             },
             Region {
-                name: "box 2".to_string(),
                 cells: vec![
                     cells::Cell{x: 2, y: 0},
                     cells::Cell{x: 2, y: 1},
@@ -145,7 +132,6 @@ mod tests {
                 ],
             },
             Region {
-                name: "box 3".to_string(),
                 cells: vec![
                     cells::Cell{x: 0, y: 2},
                     cells::Cell{x: 0, y: 3},
@@ -154,7 +140,6 @@ mod tests {
                 ],
             },
             Region {
-                name: "box 4".to_string(),
                 cells: vec![
                     cells::Cell{x: 2, y: 2},
                     cells::Cell{x: 2, y: 3},

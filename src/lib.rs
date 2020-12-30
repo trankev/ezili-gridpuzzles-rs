@@ -1,4 +1,5 @@
-mod shapes;
+pub mod settings;
+pub mod shapes;
 mod utils;
 
 use wasm_bindgen::prelude::*;
