@@ -1,6 +1,6 @@
 use super::cells;
 
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd, serde::Serialize)]
+#[derive(Debug, Eq, Ord, PartialEq, PartialOrd, serde::Deserialize, serde::Serialize)]
 pub struct Region {
     pub cells: Vec<cells::Cell>,
 }

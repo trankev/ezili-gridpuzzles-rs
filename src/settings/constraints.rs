@@ -1,14 +1,14 @@
 use crate::settings;
 use crate::shapes;
 
-#[derive(serde::Serialize)]
+#[derive(serde::Deserialize, serde::Serialize)]
 pub struct GivenSymbol {
     pub symbol: char,
     pub cell: shapes::Cell,
 }
 
-#[derive(serde::Serialize)]
-#[serde(tag="type")]
+#[derive(serde::Deserialize, serde::Serialize)]
+#[serde(tag="type", rename_all="snake_case")]
 pub enum Constraint{
     SudokuConstraints{
         symbolset: settings::TokenSetIndex,

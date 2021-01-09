@@ -1,6 +1,6 @@
 use crate::settings;
 
-#[derive(serde::Serialize)]
+#[derive(serde::Deserialize, serde::Serialize)]
 pub struct Rules {
     pub grids: Vec<settings::Grid>,
     pub tokensets: Vec<settings::TokenSet>,
