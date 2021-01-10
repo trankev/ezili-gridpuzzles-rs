@@ -10,10 +10,10 @@ pub struct Rules {
 impl Rules {
     pub fn add_grid(&mut self, rows: usize, columns: usize) -> settings::GridIndex {
         let index = self.grids.len() as settings::GridIndex;
-        self.grids.push(settings::Grid{rows, columns});
+        self.grids.push(settings::Grid { rows, columns });
         index
     }
-    pub fn add_symbolset(&mut self, tokenset: settings::TokenSet ) -> settings::TokenSetIndex {
+    pub fn add_symbolset(&mut self, tokenset: settings::TokenSet) -> settings::TokenSetIndex {
         let index = self.tokensets.len() as settings::TokenSetIndex;
         self.tokensets.push(tokenset);
         index
