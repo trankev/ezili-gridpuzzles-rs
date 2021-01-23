@@ -1,5 +1,6 @@
 pub mod settings;
 pub mod shapes;
+pub mod solving;
 mod utils;
 
 use wasm_bindgen::prelude::*;
@@ -11,7 +12,7 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-extern {
+extern "C" {
     fn alert(s: &str);
 }
 

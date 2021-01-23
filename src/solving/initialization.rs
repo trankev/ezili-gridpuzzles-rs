@@ -1,0 +1,43 @@
+use crate::settings::Constraint;
+use crate::settings::Rules;
+use crate::settings::TokenSet;
+use crate::solving::states::CellState;
+use crate::solving::states::State;
+use crate::solving::states::Tokenset;
+
+pub fn initialize(ruleset: &Rules) -> State {
+    let mut result = State {
+        tokensets: ruleset
+            .tokensets
+            .iter()
+            .map(|tokenset| match tokenset {
+                TokenSet::Symbols { grid, candidates } => {
+                    let grid = &ruleset.grids[*grid];
+                    let candidates = (0..grid.columns)
+                        .map(|_| {
+                            (0..grid.rows)
+                                .map(|_| CellState::Candidates(candidates.clone()))
+                                .collect()
+                        })
+                        .collect();
+                    Tokenset::Symbols(candidates)
+                }
+            })
+            .collect(),
+    };
+    for constraint in &ruleset.constraints {
+        match constraint {
+            Constraint::SudokuConstraints {tokenset, regions: _, givens} => {
+                for given in givens {
+                    match &mut result.tokensets[*tokenset] {
+                        Tokenset::Symbols(candidates) => {
+                            candidates[given.cell.x as usize][given.cell.y as usize] =
+                                CellState::Set(given.symbol);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    result
+}
