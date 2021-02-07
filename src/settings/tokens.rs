@@ -5,6 +5,6 @@ use super::types;
 pub enum TokenSet {
     Symbols {
         grid: types::GridIndex,
-        candidates: Vec<char>,
+        candidates: Vec<types::SymbolType>,
     },
 }

@@ -3,7 +3,7 @@ use crate::shapes;
 
 #[derive(serde::Deserialize, serde::Serialize)]
 pub struct GivenSymbol {
-    pub symbol: char,
+    pub symbol: settings::SymbolType,
     pub cell: shapes::Cell,
 }
 

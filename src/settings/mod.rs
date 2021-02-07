@@ -12,3 +12,4 @@ pub use puzzle_settings::PuzzleSetting;
 pub use tokens::TokenSet;
 use types::GridIndex;
 use types::TokenSetIndex;
+use types::SymbolType;
