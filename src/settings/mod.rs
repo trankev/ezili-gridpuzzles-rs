@@ -1,14 +1,14 @@
 mod constraints;
 mod grids;
 pub mod presets;
-mod rules;
+mod puzzle_settings;
 mod tokens;
 mod types;
 
 pub use constraints::Constraint;
 pub use constraints::GivenSymbol;
 pub use grids::Grid;
-pub use rules::Rules;
+pub use puzzle_settings::PuzzleSetting;
 pub use tokens::TokenSet;
 use types::GridIndex;
 use types::TokenSetIndex;

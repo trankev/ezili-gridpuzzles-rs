@@ -1,18 +1,18 @@
 use crate::settings::Constraint;
-use crate::settings::Rules;
+use crate::settings::PuzzleSetting;
 use crate::settings::TokenSet;
 use crate::solving::states::CellState;
 use crate::solving::states::State;
 use crate::solving::states::Tokenset;
 
-pub fn initialize(ruleset: &Rules) -> State {
+pub fn initialize(setting: &PuzzleSetting) -> State {
     let mut result = State {
-        tokensets: ruleset
+        tokensets: setting
             .tokensets
             .iter()
             .map(|tokenset| match tokenset {
                 TokenSet::Symbols { grid, candidates } => {
-                    let grid = &ruleset.grids[*grid];
+                    let grid = &setting.grids[*grid];
                     let candidates = (0..grid.columns)
                         .map(|_| {
                             (0..grid.rows)
@@ -25,7 +25,7 @@ pub fn initialize(ruleset: &Rules) -> State {
             })
             .collect(),
     };
-    for constraint in &ruleset.constraints {
+    for constraint in &setting.constraints {
         match constraint {
             Constraint::SudokuConstraints {tokenset, regions: _, givens} => {
                 for given in givens {

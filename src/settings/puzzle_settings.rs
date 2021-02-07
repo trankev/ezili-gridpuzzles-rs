@@ -1,13 +1,13 @@
 use crate::settings;
 
 #[derive(serde::Deserialize, serde::Serialize)]
-pub struct Rules {
+pub struct PuzzleSetting {
     pub grids: Vec<settings::Grid>,
     pub tokensets: Vec<settings::TokenSet>,
     pub constraints: Vec<settings::Constraint>,
 }
 
-impl Rules {
+impl PuzzleSetting {
     pub fn add_grid(&mut self, rows: usize, columns: usize) -> settings::GridIndex {
         let index = self.grids.len() as settings::GridIndex;
         self.grids.push(settings::Grid { rows, columns });
@@ -20,9 +20,9 @@ impl Rules {
     }
 }
 
-impl Default for Rules {
-    fn default() -> Rules {
-        Rules {
+impl Default for PuzzleSetting {
+    fn default() -> PuzzleSetting {
+        PuzzleSetting {
             grids: Vec::new(),
             tokensets: Vec::new(),
             constraints: Vec::new(),

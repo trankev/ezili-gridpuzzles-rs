@@ -2,7 +2,7 @@ use crate::settings;
 use crate::shapes;
 
 pub fn add_symbolset(
-    rules: &mut settings::Rules,
+    setting: &mut settings::PuzzleSetting,
     grid: settings::GridIndex,
     digits: u32,
     regions: Vec<shapes::Region>,
@@ -12,12 +12,12 @@ pub fn add_symbolset(
         .map(|digit| std::char::from_digit(digit, 10).unwrap())
         .collect::<Vec<_>>();
     let category = settings::TokenSet::Symbols { candidates, grid };
-    let tokenset = rules.add_symbolset(category);
+    let tokenset = setting.add_symbolset(category);
     let constraint = settings::Constraint::SudokuConstraints {
         tokenset,
         regions,
         givens,
     };
-    rules.constraints.push(constraint);
+    setting.constraints.push(constraint);
     tokenset
 }
