@@ -1,5 +1,5 @@
-use crate::settings::Rule;
 use crate::settings::PuzzleSetting;
+use crate::settings::Rule;
 use crate::settings::TokenSet;
 use crate::solving::states::CellState;
 use crate::solving::states::State;
@@ -27,7 +27,11 @@ pub fn initialize(setting: &PuzzleSetting) -> State {
     };
     for rule in &setting.rules {
         match rule {
-            Rule::Sudoku {tokenset, regions: _, givens} => {
+            Rule::Sudoku {
+                tokenset,
+                regions: _,
+                givens,
+            } => {
                 for given in givens {
                     match &mut result.tokensets[*tokenset] {
                         Tokenset::Symbols(candidates) => {
