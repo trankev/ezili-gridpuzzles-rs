@@ -4,7 +4,7 @@ use crate::settings;
 pub struct PuzzleSetting {
     pub grids: Vec<settings::Grid>,
     pub tokensets: Vec<settings::TokenSet>,
-    pub constraints: Vec<settings::Constraint>,
+    pub rules: Vec<settings::Rule>,
 }
 
 impl PuzzleSetting {
@@ -25,7 +25,7 @@ impl Default for PuzzleSetting {
         PuzzleSetting {
             grids: Vec::new(),
             tokensets: Vec::new(),
-            constraints: Vec::new(),
+            rules: Vec::new(),
         }
     }
 }

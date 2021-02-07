@@ -13,11 +13,11 @@ pub fn add_symbolset(
         .collect::<Vec<_>>();
     let category = settings::TokenSet::Symbols { candidates, grid };
     let tokenset = setting.add_symbolset(category);
-    let constraint = settings::Constraint::SudokuConstraints {
+    let rule = settings::Rule::Sudoku {
         tokenset,
         regions,
         givens,
     };
-    setting.constraints.push(constraint);
+    setting.rules.push(rule);
     tokenset
 }
