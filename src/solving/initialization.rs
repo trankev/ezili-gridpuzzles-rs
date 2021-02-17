@@ -1,5 +1,5 @@
 use crate::settings;
-use crate::solving::states;
+use crate::states;
 
 pub fn initialize(
     setting: &settings::PuzzleSetting,
@@ -21,11 +21,7 @@ pub fn initialize(
             }
         })
         .collect();
-    let constraints = settings::list_constraints(setting)?;
-    let result = states::State {
-        tokensets,
-        constraints,
-    };
+    let result = states::State { tokensets, };
     Ok(result)
 }
 
@@ -36,7 +32,7 @@ mod tests {
     use crate::settings::presets;
     use crate::settings::presets::sudoku;
     use crate::shapes;
-    use crate::solving::states;
+    use crate::states;
 
     #[test]
     fn test_nominal() -> Result<(), Box<dyn std::error::Error>> {
@@ -82,53 +78,7 @@ mod tests {
             .iter()
             .cloned()
             .collect::<std::collections::HashMap<char, usize>>();
-        let mut constraints = Vec::new();
-        constraints.extend(shapes::Region::grid_boxes(2, 2, 2, 2).map(|region| {
-            settings::Constraint::SymbolRepartition {
-                tokenset: 0,
-                repartition: repartition.clone(),
-                region,
-            }
-        }));
-        constraints.extend(shapes::Region::rows(4, 4).map(|region| {
-            settings::Constraint::SymbolRepartition {
-                tokenset: 0,
-                repartition: repartition.clone(),
-                region,
-            }
-        }));
-        constraints.extend(shapes::Region::columns(4, 4).map(|region| {
-            settings::Constraint::SymbolRepartition {
-                tokenset: 0,
-                repartition: repartition.clone(),
-                region,
-            }
-        }));
-        constraints.extend(
-            [
-                settings::Constraint::GivenSymbol {
-                    tokenset: 0,
-                    cell: shapes::Cell { x: 0, y: 0 },
-                    symbol: '5',
-                },
-                settings::Constraint::GivenSymbol {
-                    tokenset: 0,
-                    cell: shapes::Cell { x: 2, y: 1 },
-                    symbol: '6',
-                },
-                settings::Constraint::GivenSymbol {
-                    tokenset: 0,
-                    cell: shapes::Cell { x: 1, y: 2 },
-                    symbol: '1',
-                },
-            ]
-            .iter()
-            .cloned(),
-        );
-        let expected = states::State {
-            tokensets,
-            constraints,
-        };
+        let expected = states::State { tokensets };
         assert_eq!(result, expected);
         Ok(())
     }

@@ -1,6 +1,7 @@
 pub mod settings;
 pub mod shapes;
 pub mod solving;
+pub mod states;
 mod utils;
 
 use wasm_bindgen::prelude::*;
