@@ -2,6 +2,7 @@
 pub enum CellState {
     Set(char),
     Candidates(Vec<char>),
+    Empty,
 }
 
 #[derive(Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]

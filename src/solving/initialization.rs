@@ -21,7 +21,7 @@ pub fn initialize(
             }
         })
         .collect();
-    let result = states::State { tokensets, };
+    let result = states::State { tokensets };
     Ok(result)
 }
 

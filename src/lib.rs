@@ -1,3 +1,4 @@
+pub mod playing;
 pub mod settings;
 pub mod shapes;
 pub mod solving;

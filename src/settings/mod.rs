@@ -8,6 +8,7 @@ mod types;
 
 pub use constraints::list_constraints;
 pub use constraints::Constraint;
+pub use constraints::SymbolRepartition;
 pub use grids::Grid;
 pub use puzzle_settings::PuzzleSetting;
 pub use rules::GivenSymbol;
