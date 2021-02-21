@@ -16,14 +16,20 @@ pub struct State {
 }
 
 pub fn symbolset(grid: Vec<String>, default: CellState) -> Tokenset {
-    let cells = grid.iter().map(|row_contents| row_contents.chars().map(|symbol| match symbol {
-            '.' | ' ' => default.clone(),
-            _ => CellState::Set(symbol),
-        }).collect::<Vec<_>>()
-    ).collect::<Vec<_>>();
+    let cells = grid
+        .iter()
+        .map(|row_contents| {
+            row_contents
+                .chars()
+                .map(|symbol| match symbol {
+                    '.' | ' ' => default.clone(),
+                    _ => CellState::Set(symbol),
+                })
+                .collect::<Vec<_>>()
+        })
+        .collect::<Vec<_>>();
     Tokenset::Symbols(cells)
 }
-
 
 #[cfg(test)]
 mod tests {

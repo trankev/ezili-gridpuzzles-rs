@@ -5,6 +5,8 @@ pub mod solving;
 pub mod states;
 mod utils;
 
+pub use utils::set_panic_hook;
+
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global

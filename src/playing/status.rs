@@ -10,10 +10,7 @@ pub enum Status {
 
 type ResultStatus = Result<Status, Box<dyn std::error::Error>>;
 
-pub fn compute_status(
-    state: &states::State,
-    constraints: &Vec<settings::Constraint>,
-) -> ResultStatus {
+pub fn compute_status(state: &states::State, constraints: &[settings::Constraint]) -> ResultStatus {
     for constraint in constraints {
         let status = match constraint {
             settings::Constraint::GivenSymbol {
@@ -29,8 +26,8 @@ pub fn compute_status(
         };
         match status {
             Status::Ongoing => (),
-            other => {
-                return Ok(other);
+            _ => {
+                return Ok(status);
             }
         }
     }
@@ -74,14 +71,11 @@ fn check_symbol_repartition(
             let mut completed = true;
             for cell in &region.cells {
                 let cell_state = &cells[cell.x as usize][cell.y as usize];
-                match cell_state {
-                    states::CellState::Set(value) => {
-                        found
-                            .entry(*value)
-                            .and_modify(|count| *count += 1)
-                            .or_insert(1);
-                    }
-                    _ => (),
+                if let states::CellState::Set(value) = cell_state {
+                    found
+                        .entry(*value)
+                        .and_modify(|count| *count += 1)
+                        .or_insert(1);
                 }
             }
             for (symbol, expected_count) in repartition.iter() {

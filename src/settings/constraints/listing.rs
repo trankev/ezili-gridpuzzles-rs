@@ -23,8 +23,8 @@ pub fn list_constraints(
 fn iter_sudoku_constraints(
     setting: &settings::PuzzleSetting,
     tokenset_index: settings::TokenSetIndex,
-    regions: &Vec<shapes::Region>,
-    givens: &Vec<settings::GivenSymbol>,
+    regions: &[shapes::Region],
+    givens: &[settings::GivenSymbol],
 ) -> Result<Vec<settings::Constraint>, Box<dyn std::error::Error>> {
     let tokenset = setting
         .tokensets
@@ -52,7 +52,7 @@ fn iter_sudoku_constraints(
         all_regions.map(move |region| settings::Constraint::SymbolRepartition {
             tokenset: tokenset_index,
             repartition: repartition.clone(),
-            region: region,
+            region,
         });
     let given_contraints = givens
         .iter()
