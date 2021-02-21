@@ -20,7 +20,9 @@ pub fn initialize(
             }
         })
         .collect();
-    let result = states::State { tokensets };
+    let mut result = states::State { tokensets };
+    let constraints = settings::list_constraints(setting)?;
+    states::apply_constraints(&mut result, &constraints);
     Ok(result)
 }
 
@@ -31,7 +33,7 @@ fn initialize_symbolset(
 ) -> states::Tokenset {
     let default = match purpose {
         Purpose::Playing => states::CellState::Empty,
-        Purpose::Solving => states::CellState::Candidates(candidates.to_vec()),
+        Purpose::Solving => states::CellState::Candidates(candidates.iter().cloned().collect()),
     };
     let candidates = (0..grid.columns)
         .map(|_| (0..grid.rows).map(|_| default.clone()).collect())
@@ -63,16 +65,10 @@ mod tests {
         sudoku::add_symbolset(&mut setting, grid, 4, regions, givens);
 
         let result = initialize(&setting, Purpose::Solving)?;
-        let candidates = states::CellState::Candidates(vec!['1', '2', '3', '4']);
+        let candidates = states::CellState::Candidates("1234".chars().collect());
         let tokensets = vec![states::Tokenset::Symbols(vec![
             vec![
-                candidates.clone(),
-                candidates.clone(),
-                candidates.clone(),
-                candidates.clone(),
-            ],
-            vec![
-                candidates.clone(),
+                states::CellState::Set('5'),
                 candidates.clone(),
                 candidates.clone(),
                 candidates.clone(),
@@ -80,6 +76,12 @@ mod tests {
             vec![
                 candidates.clone(),
                 candidates.clone(),
+                states::CellState::Set('6'),
+                candidates.clone(),
+            ],
+            vec![
+                candidates.clone(),
+                states::CellState::Set('1'),
                 candidates.clone(),
                 candidates.clone(),
             ],
@@ -111,13 +113,7 @@ mod tests {
         let result = initialize(&setting, Purpose::Playing)?;
         let tokensets = vec![states::Tokenset::Symbols(vec![
             vec![
-                states::CellState::Empty,
-                states::CellState::Empty,
-                states::CellState::Empty,
-                states::CellState::Empty,
-            ],
-            vec![
-                states::CellState::Empty,
+                states::CellState::Set('5'),
                 states::CellState::Empty,
                 states::CellState::Empty,
                 states::CellState::Empty,
@@ -125,6 +121,12 @@ mod tests {
             vec![
                 states::CellState::Empty,
                 states::CellState::Empty,
+                states::CellState::Set('6'),
+                states::CellState::Empty,
+            ],
+            vec![
+                states::CellState::Empty,
+                states::CellState::Set('1'),
                 states::CellState::Empty,
                 states::CellState::Empty,
             ],

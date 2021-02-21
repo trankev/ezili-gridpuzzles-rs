@@ -1,7 +1,7 @@
 #[derive(Clone, Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
 pub enum CellState {
     Set(char),
-    Candidates(Vec<char>),
+    Candidates(std::collections::HashSet<char>),
     Empty,
 }
 
