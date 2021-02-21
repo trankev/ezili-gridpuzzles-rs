@@ -10,11 +10,6 @@ pub enum Tokenset {
     Symbols(Vec<Vec<CellState>>),
 }
 
-#[derive(Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
-pub struct State {
-    pub tokensets: Vec<Tokenset>,
-}
-
 pub fn symbolset(grid: Vec<String>, default: CellState) -> Tokenset {
     let cells = grid
         .iter()

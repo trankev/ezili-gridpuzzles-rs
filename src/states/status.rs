@@ -95,3 +95,29 @@ fn check_symbol_repartition(
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::settings;
+    use crate::settings::presets;
+    use crate::settings::presets::sudoku;
+    use crate::shapes;
+
+    fn sample_setting() -> settings::PuzzleSetting {
+        let mut setting = settings::PuzzleSetting::default();
+        let grid = setting.add_grid(4, 4);
+        let regions = shapes::Region::grid_boxes(2, 2, 2, 2).collect();
+        let givens = presets::givens(vec![
+            "5...".to_string(),
+            "..6.".to_string(),
+            ".1..".to_string(),
+            "....".to_string(),
+        ]);
+        sudoku::add_symbolset(&mut setting, grid, 4, regions, givens);
+        setting
+    }
+    #[test]
+    fn test_nominal() {
+        let setting = sample_setting();
+    }
+}
