@@ -5,7 +5,7 @@ pub enum CellState {
     Empty,
 }
 
-#[derive(Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
 pub enum Tokenset {
     Symbols(Vec<Vec<CellState>>),
 }
