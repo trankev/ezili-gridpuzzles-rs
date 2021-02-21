@@ -10,7 +10,7 @@ pub enum Tokenset {
     Symbols(Vec<Vec<CellState>>),
 }
 
-pub fn symbolset(grid: Vec<String>, default: CellState) -> Tokenset {
+pub fn symbolset(grid: &[String], default: CellState) -> Tokenset {
     let cells = grid
         .iter()
         .map(|row_contents| {
@@ -32,13 +32,13 @@ mod tests {
 
     #[test]
     fn test_symbolset() {
-        let grid = vec![
+        let grid = [
             "12..".to_string(),
             ".1..".to_string(),
             "....".to_string(),
             "4567".to_string(),
         ];
-        let result = symbolset(grid, CellState::Empty);
+        let result = symbolset(&grid, CellState::Empty);
         let expected_grid = vec![
             vec![
                 CellState::Set('1'),
