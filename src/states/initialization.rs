@@ -28,7 +28,7 @@ pub fn initialize(
 
 fn initialize_symbolset(
     grid: &settings::Grid,
-    candidates: &[char],
+    candidates: &[settings::SymbolType],
     purpose: &Purpose,
 ) -> states::Tokenset {
     let default = match purpose {

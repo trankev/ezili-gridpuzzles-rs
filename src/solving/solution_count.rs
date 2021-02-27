@@ -6,7 +6,7 @@ enum Iterator {
     Symbolset {
         tokenset: usize,
         cell: shapes::Cell,
-        candidates: Vec<char>,
+        candidates: Vec<settings::SymbolType>,
     },
     Unset,
 }
@@ -93,7 +93,6 @@ fn find_pivot(setting: &settings::PuzzleSetting, state: &states::State) -> Itera
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::settings;
     use crate::settings::presets::sudoku;
     use crate::states;
 

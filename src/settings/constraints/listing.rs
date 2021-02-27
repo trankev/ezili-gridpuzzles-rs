@@ -90,7 +90,7 @@ mod tests {
         let repartition = [('1', 1), ('2', 1), ('3', 1), ('4', 1)]
             .iter()
             .cloned()
-            .collect::<std::collections::HashMap<char, usize>>();
+            .collect::<std::collections::HashMap<settings::SymbolType, usize>>();
         let mut expected = Vec::new();
         expected.extend(shapes::Region::grid_boxes(2, 2, 2, 2).map(|region| {
             settings::Constraint::SymbolRepartition {

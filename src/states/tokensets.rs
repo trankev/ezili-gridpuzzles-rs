@@ -1,7 +1,9 @@
+use crate::settings;
+
 #[derive(Clone, Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
 pub enum CellState {
-    Set(char),
-    Candidates(std::collections::HashSet<char>),
+    Set(settings::SymbolType),
+    Candidates(std::collections::HashSet<settings::SymbolType>),
     Empty,
 }
 

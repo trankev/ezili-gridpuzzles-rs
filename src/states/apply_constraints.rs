@@ -19,7 +19,7 @@ fn apply_given_symbol(
     state: &mut states::State,
     tokenset: usize,
     cell: &shapes::Cell,
-    symbol: char,
+    symbol: settings::SymbolType,
 ) {
     let tokenset = &mut state.tokensets[tokenset];
     match tokenset {

@@ -43,7 +43,7 @@ fn check_given_symbol(
     state: &states::State,
     tokenset: usize,
     cell: &shapes::Cell,
-    symbol: char,
+    symbol: settings::SymbolType,
 ) -> ResultStatus {
     let tokenset = &state.tokensets[tokenset];
     match tokenset {
