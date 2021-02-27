@@ -8,7 +8,7 @@ pub enum CellState {
     Empty,
 }
 
-type CellGrid = Vec<Vec<CellState>>;
+pub type CellGrid = Vec<Vec<CellState>>;
 
 impl std::ops::Index<&shapes::Cell> for CellGrid {
     type Output = CellState;

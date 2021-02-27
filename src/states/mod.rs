@@ -10,5 +10,6 @@ pub use initialization::initialize;
 pub use status::compute_status;
 pub use status::Status;
 pub use tokensets::symbolset;
+pub use tokensets::CellGrid;
 pub use tokensets::CellState;
 pub use tokensets::Tokenset;
