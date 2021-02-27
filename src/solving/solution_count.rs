@@ -66,10 +66,7 @@ fn find_pivot(setting: &settings::PuzzleSetting, state: &states::State) -> Itera
                         if let states::CellState::Set(_) = &cells[row][cell] {
                             continue;
                         }
-                        let cell = shapes::Cell {
-                            x: cell as isize,
-                            y: row as isize,
-                        };
+                        let cell = shapes::Cell { x: cell, y: row };
                         let setting_tokenset = &setting.tokensets[index];
                         let candidates = match setting_tokenset {
                             settings::TokenSet::Symbols {

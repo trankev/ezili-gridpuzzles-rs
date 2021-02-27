@@ -45,8 +45,8 @@ fn iter_sudoku_constraints(
         .grids
         .get(*grid_index as usize)
         .ok_or("grid index out of range")?;
-    let rows = shapes::Region::rows(grid.rows as isize, grid.columns as isize);
-    let columns = shapes::Region::columns(grid.columns as isize, grid.rows as isize);
+    let rows = shapes::Region::rows(grid.rows, grid.columns);
+    let columns = shapes::Region::columns(grid.columns, grid.rows);
     let all_regions = regions.iter().cloned().chain(rows).chain(columns);
     let repartition_constraints =
         all_regions.map(move |region| settings::Constraint::SymbolRepartition {

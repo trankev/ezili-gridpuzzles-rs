@@ -6,7 +6,7 @@ pub struct Region {
 }
 
 impl Region {
-    fn row(position: isize, size: isize) -> Region {
+    fn row(position: usize, size: usize) -> Region {
         Region {
             cells: (0..size)
                 .map(move |index| cells::Cell {
@@ -17,11 +17,11 @@ impl Region {
         }
     }
 
-    pub fn rows(count: isize, size: isize) -> impl Iterator<Item = Region> {
+    pub fn rows(count: usize, size: usize) -> impl Iterator<Item = Region> {
         (0..count).map(move |index| Region::row(index, size))
     }
 
-    fn column(position: isize, size: isize) -> Region {
+    fn column(position: usize, size: usize) -> Region {
         Region {
             cells: (0..size)
                 .map(|index| cells::Cell {
@@ -32,11 +32,11 @@ impl Region {
         }
     }
 
-    pub fn columns(count: isize, size: isize) -> impl Iterator<Item = Region> {
+    pub fn columns(count: usize, size: usize) -> impl Iterator<Item = Region> {
         (0..count).map(move |index| Region::column(index, size))
     }
 
-    fn grid_box(v_offset: isize, h_offset: isize, width: isize, height: isize) -> Region {
+    fn grid_box(v_offset: usize, h_offset: usize, width: usize, height: usize) -> Region {
         Region {
             cells: (0..width)
                 .flat_map(|x| {
@@ -50,10 +50,10 @@ impl Region {
     }
 
     pub fn grid_boxes(
-        v_count: isize,
-        h_count: isize,
-        width: isize,
-        height: isize,
+        v_count: usize,
+        h_count: usize,
+        width: usize,
+        height: usize,
     ) -> impl Iterator<Item = Region> {
         (0..h_count).flat_map(move |h_offset| {
             (0..v_count).map(move |v_offset| Region::grid_box(v_offset, h_offset, width, height))
