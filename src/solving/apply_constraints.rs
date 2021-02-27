@@ -3,6 +3,7 @@ use crate::shapes;
 use crate::states;
 
 pub fn apply_constraints(state: &mut states::State, constraints: &[settings::Constraint]) {
+    states::apply_constraints(state, constraints);
     for constraint in constraints {
         match constraint {
             settings::Constraint::SymbolRepartition {

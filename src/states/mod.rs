@@ -4,7 +4,7 @@ mod initialization;
 mod status;
 mod tokensets;
 
-use apply_constraints::apply_constraints;
+pub use apply_constraints::apply_constraints;
 pub use base::State;
 pub use initialization::initialize;
 pub use status::compute_status;
