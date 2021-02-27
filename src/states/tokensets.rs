@@ -1,4 +1,5 @@
 use crate::settings;
+use crate::shapes;
 
 #[derive(Clone, Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
 pub enum CellState {
@@ -7,9 +8,25 @@ pub enum CellState {
     Empty,
 }
 
+type CellGrid = Vec<Vec<CellState>>;
+
+impl std::ops::Index<&shapes::Cell> for CellGrid {
+    type Output = CellState;
+
+    fn index(&self, cell: &shapes::Cell) -> &Self::Output {
+        &self[cell.y][cell.x]
+    }
+}
+
+impl std::ops::IndexMut<&shapes::Cell> for CellGrid {
+    fn index_mut(&mut self, cell: &shapes::Cell) -> &mut Self::Output {
+        &mut self[cell.y][cell.x]
+    }
+}
+
 #[derive(Clone, Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
 pub enum Tokenset {
-    Symbols(Vec<Vec<CellState>>),
+    Symbols(CellGrid),
 }
 
 pub fn symbolset(grid: &[String], default: CellState) -> Tokenset {

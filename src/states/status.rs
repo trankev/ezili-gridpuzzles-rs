@@ -48,7 +48,7 @@ fn check_given_symbol(
     let tokenset = &state.tokensets[tokenset];
     match tokenset {
         states::Tokenset::Symbols(cells) => {
-            let cell_state = &cells[cell.y as usize][cell.x as usize];
+            let cell_state = &cells[cell];
             match cell_state {
                 states::CellState::Set(value) => {
                     if *value == symbol {
@@ -75,7 +75,7 @@ fn check_symbol_repartition(
             let mut found = settings::SymbolRepartition::new();
             let mut completed = true;
             for cell in &region.cells {
-                let cell_state = &cells[cell.y as usize][cell.x as usize];
+                let cell_state = &cells[cell];
                 if let states::CellState::Set(value) = cell_state {
                     found
                         .entry(*value)

@@ -27,7 +27,7 @@ fn apply_symbol_repartition(
         states::Tokenset::Symbols(cells) => {
             let mut found = settings::SymbolRepartition::new();
             for cell in &region.cells {
-                let cell_state = &cells[cell.y as usize][cell.x as usize];
+                let cell_state = &cells[cell];
                 if let states::CellState::Set(value) = cell_state {
                     found
                         .entry(*value)
@@ -47,7 +47,7 @@ fn apply_symbol_repartition(
                 })
                 .collect::<Vec<_>>();
             for cell in &region.cells {
-                let cell_state = &mut cells[cell.y as usize][cell.x as usize];
+                let cell_state = &mut cells[cell];
                 if let states::CellState::Candidates(candidates) = cell_state {
                     for value in &to_remove {
                         candidates.remove(value);

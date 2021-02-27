@@ -40,17 +40,17 @@ fn do_count_solutions(
             let previous = {
                 let tokenset = &mut state.tokensets[tokenset];
                 let states::Tokenset::Symbols(cells) = tokenset;
-                cells[cell.y as usize][cell.x as usize].clone()
+                cells[&cell].clone()
             };
             for candidate in &candidates {
                 let tokenset = &mut state.tokensets[tokenset];
                 let states::Tokenset::Symbols(cells) = tokenset;
-                cells[cell.y as usize][cell.x as usize] = states::CellState::Set(*candidate);
+                cells[&cell] = states::CellState::Set(*candidate);
                 result += do_count_solutions(setting, state, constraints)?;
             }
             let tokenset = &mut state.tokensets[tokenset];
             let states::Tokenset::Symbols(cells) = tokenset;
-            cells[cell.y as usize][cell.x as usize] = previous;
+            cells[&cell] = previous;
         }
         Iterator::Unset => (),
     }
@@ -62,11 +62,11 @@ fn find_pivot(setting: &settings::PuzzleSetting, state: &states::State) -> Itera
         match tokenset {
             states::Tokenset::Symbols(cells) => {
                 for row in 0..cells.len() {
-                    for cell in 0..cells[row].len() {
-                        if let states::CellState::Set(_) = &cells[row][cell] {
+                    for column in 0..cells[row].len() {
+                        let cell = shapes::Cell { x: column, y: row };
+                        if let states::CellState::Set(_) = &cells[&cell] {
                             continue;
                         }
-                        let cell = shapes::Cell { x: cell, y: row };
                         let setting_tokenset = &setting.tokensets[index];
                         let candidates = match setting_tokenset {
                             settings::TokenSet::Symbols {
