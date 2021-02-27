@@ -72,37 +72,22 @@ fn find_pivot(state: &states::State) -> Iterator {
 mod tests {
     use super::*;
     use crate::settings;
-    use crate::settings::presets;
     use crate::settings::presets::sudoku;
-    use crate::shapes;
     use crate::states;
 
-    fn sample_setting() -> settings::PuzzleSetting {
-        let mut setting = settings::PuzzleSetting::default();
-        let grid = setting.add_grid(4, 4);
-        let regions = shapes::Region::grid_boxes(2, 2, 2, 2).collect();
-        let givens = presets::givens(vec![
+    #[test]
+    fn test_finished_position() -> Result<(), Box<dyn std::error::Error>> {
+        let grid = vec![
             "2...".to_string(),
             "..3.".to_string(),
             ".1..".to_string(),
             "...4".to_string(),
-        ]);
-        sudoku::add_symbolset(&mut setting, grid, 4, regions, givens);
-        setting
-    }
-
-    #[test]
-    fn test_finished_position() -> Result<(), Box<dyn std::error::Error>> {
-        let setting = sample_setting();
+        ];
+        let setting = sudoku::setting(2, &grid);
         let constraints = settings::list_constraints(&setting)?;
         let mut state = states::State {
             tokensets: vec![states::symbolset(
-                &[
-                    "2341".to_string(),
-                    "1432".to_string(),
-                    "4123".to_string(),
-                    "3214".to_string(),
-                ],
+                &grid,
                 states::CellState::Candidates("1234".chars().collect()),
             )],
         };
@@ -113,16 +98,17 @@ mod tests {
 
     #[test]
     fn test_start_position() -> Result<(), Box<dyn std::error::Error>> {
-        let setting = sample_setting();
+        let grid = vec![
+            "2...".to_string(),
+            "..3.".to_string(),
+            ".1..".to_string(),
+            "...4".to_string(),
+        ];
+        let setting = sudoku::setting(2, &grid);
         let constraints = settings::list_constraints(&setting)?;
         let mut state = states::State {
             tokensets: vec![states::symbolset(
-                &[
-                    "2...".to_string(),
-                    "..3.".to_string(),
-                    ".1..".to_string(),
-                    "...4".to_string(),
-                ],
+                &grid,
                 states::CellState::Candidates("1234".chars().collect()),
             )],
         };
