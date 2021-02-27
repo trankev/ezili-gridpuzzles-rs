@@ -1,7 +1,7 @@
 use crate::settings;
 use crate::shapes;
 
-pub fn givens(string_grid: Vec<String>) -> Vec<settings::GivenSymbol> {
+pub fn givens(string_grid: &[String]) -> Vec<settings::GivenSymbol> {
     string_grid
         .iter()
         .enumerate()
