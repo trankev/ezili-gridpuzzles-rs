@@ -5,8 +5,7 @@ use crate::states;
 pub trait Strategy {
     fn search(
         &self,
-        setting: &settings::PuzzleSetting,
         constraints: &Vec<settings::Constraint>,
         state: &states::State,
-    ) -> Vec<strategies::Deduction>;
+    ) -> Result<Vec<strategies::Deduction>, Box<dyn std::error::Error>>;
 }

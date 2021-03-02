@@ -2,7 +2,8 @@ use crate::settings;
 use crate::shapes;
 use crate::states;
 
-type SymbolPositions = std::collections::HashMap<settings::SymbolType, Vec<shapes::Cell>>;
+type SymbolPositions =
+    std::collections::HashMap<settings::SymbolType, std::collections::HashSet<shapes::Cell>>;
 
 pub fn symbol_positions(
     cells: &states::CellGrid,
@@ -12,15 +13,17 @@ pub fn symbol_positions(
     let mut candidate_positions = SymbolPositions::new();
     for cell in &region.cells {
         match &cells[cell] {
-            states::CellState::Set(value) => set_positions
-                .entry(*value)
-                .or_insert(Vec::new())
-                .push(cell.clone()),
+            states::CellState::Set(value) => {
+                set_positions
+                    .entry(*value)
+                    .or_insert(std::collections::HashSet::new())
+                    .insert(cell.clone());
+            }
             states::CellState::Candidates(candidates) => candidates.iter().for_each(|candidate| {
                 candidate_positions
                     .entry(*candidate)
-                    .or_insert(Vec::new())
-                    .push(cell.clone())
+                    .or_insert(std::collections::HashSet::new())
+                    .insert(cell.clone());
             }),
             states::CellState::Empty => (),
         }
@@ -62,9 +65,12 @@ mod tests {
         let expected_set = [
             (
                 'a',
-                vec![shapes::Cell { x: 0, y: 0 }, shapes::Cell { x: 2, y: 0 }],
+                [shapes::Cell { x: 0, y: 0 }, shapes::Cell { x: 2, y: 0 }]
+                    .iter()
+                    .cloned()
+                    .collect(),
             ),
-            ('k', vec![shapes::Cell { x: 2, y: 1 }]),
+            ('k', [shapes::Cell { x: 2, y: 1 }].iter().cloned().collect()),
         ]
         .iter()
         .cloned()
@@ -72,10 +78,13 @@ mod tests {
         let expected_candidates = [
             (
                 'e',
-                vec![shapes::Cell { x: 3, y: 0 }, shapes::Cell { x: 1, y: 1 }],
+                [shapes::Cell { x: 3, y: 0 }, shapes::Cell { x: 1, y: 1 }]
+                    .iter()
+                    .cloned()
+                    .collect(),
             ),
-            ('f', vec![shapes::Cell { x: 3, y: 0 }]),
-            ('j', vec![shapes::Cell { x: 1, y: 1 }]),
+            ('f', [shapes::Cell { x: 3, y: 0 }].iter().cloned().collect()),
+            ('j', [shapes::Cell { x: 1, y: 1 }].iter().cloned().collect()),
         ]
         .iter()
         .cloned()

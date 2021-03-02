@@ -11,6 +11,7 @@ crate-type = ["cdylib", "rlib"]
 default = ["console_error_panic_hook"]
 
 [dependencies]
+itertools = "*"
 serde = {version = "*", features=["derive"]}
 wasm-bindgen = "0.2.63"
 
