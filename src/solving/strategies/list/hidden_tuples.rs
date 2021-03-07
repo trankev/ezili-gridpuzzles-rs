@@ -164,7 +164,7 @@ mod tests {
         };
 
         let region = shapes::Region {
-            cells: (0..4).map(|x| shapes::Cell { x, y: 0 }).collect(),
+            cells: (0..4).map(|x| shapes::Cell(x, 0)).collect(),
         };
         let constraints = vec![settings::Constraint::SymbolRepartition {
             tokenset: 0,
@@ -178,17 +178,17 @@ mod tests {
             category: strategies::Category::HiddenTuple {
                 symbols: "34".chars().collect(),
                 region,
-                positions: vec![shapes::Cell { x: 0, y: 0 }, shapes::Cell { x: 1, y: 0 }],
+                positions: vec![shapes::Cell(0, 0), shapes::Cell(1, 0)],
             },
             actions: vec![
                 strategies::Action::RemoveSymbolCandidate {
                     tokenset: 0,
-                    cell: shapes::Cell { x: 0, y: 0 },
+                    cell: shapes::Cell(0, 0),
                     symbol: '1',
                 },
                 strategies::Action::RemoveSymbolCandidate {
                     tokenset: 0,
-                    cell: shapes::Cell { x: 1, y: 0 },
+                    cell: shapes::Cell(1, 0),
                     symbol: '2',
                 },
             ],
@@ -209,7 +209,7 @@ mod tests {
         };
 
         let region = shapes::Region {
-            cells: (0..4).map(|x| shapes::Cell { x, y: 0 }).collect(),
+            cells: (0..4).map(|x| shapes::Cell(x, 0)).collect(),
         };
         let constraints = vec![settings::Constraint::SymbolRepartition {
             tokenset: 0,
@@ -223,11 +223,11 @@ mod tests {
             category: strategies::Category::HiddenTuple {
                 symbols: "3".chars().collect(),
                 region,
-                positions: vec![shapes::Cell { x: 1, y: 0 }],
+                positions: vec![shapes::Cell(1, 0)],
             },
             actions: vec![strategies::Action::SetSymbol {
                 tokenset: 0,
-                cell: shapes::Cell { x: 1, y: 0 },
+                cell: shapes::Cell(1, 0),
                 symbol: '3',
             }],
         }];
@@ -247,7 +247,7 @@ mod tests {
         };
 
         let region = shapes::Region {
-            cells: (0..4).map(|x| shapes::Cell { x, y: 0 }).collect(),
+            cells: (0..4).map(|x| shapes::Cell(x, 0)).collect(),
         };
         let constraints = vec![settings::Constraint::SymbolRepartition {
             tokenset: 0,

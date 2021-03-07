@@ -13,7 +13,7 @@ pub fn givens(string_grid: &[String]) -> Vec<settings::GivenSymbol> {
                     '.' | ' ' => None,
                     _ => Some(settings::GivenSymbol {
                         symbol,
-                        cell: shapes::Cell { x: column, y: row },
+                        cell: shapes::Cell(column, row),
                     }),
                 })
         })

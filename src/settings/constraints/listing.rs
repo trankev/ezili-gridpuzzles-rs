@@ -117,17 +117,17 @@ mod tests {
             [
                 settings::Constraint::GivenSymbol {
                     tokenset: 0,
-                    cell: shapes::Cell { x: 0, y: 0 },
+                    cell: shapes::Cell(0, 0),
                     symbol: '5',
                 },
                 settings::Constraint::GivenSymbol {
                     tokenset: 0,
-                    cell: shapes::Cell { x: 2, y: 1 },
+                    cell: shapes::Cell(2, 1),
                     symbol: '6',
                 },
                 settings::Constraint::GivenSymbol {
                     tokenset: 0,
-                    cell: shapes::Cell { x: 1, y: 2 },
+                    cell: shapes::Cell(1, 2),
                     symbol: '1',
                 },
             ]

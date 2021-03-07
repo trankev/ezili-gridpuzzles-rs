@@ -53,11 +53,11 @@ mod tests {
         ];
         let region = shapes::Region {
             cells: vec![
-                shapes::Cell { x: 0, y: 0 },
-                shapes::Cell { x: 2, y: 0 },
-                shapes::Cell { x: 3, y: 0 },
-                shapes::Cell { x: 1, y: 1 },
-                shapes::Cell { x: 2, y: 1 },
+                shapes::Cell(0, 0),
+                shapes::Cell(2, 0),
+                shapes::Cell(3, 0),
+                shapes::Cell(1, 1),
+                shapes::Cell(2, 1),
             ],
         };
 
@@ -65,12 +65,12 @@ mod tests {
         let expected_set = [
             (
                 'a',
-                [shapes::Cell { x: 0, y: 0 }, shapes::Cell { x: 2, y: 0 }]
+                [shapes::Cell(0, 0), shapes::Cell(2, 0)]
                     .iter()
                     .cloned()
                     .collect(),
             ),
-            ('k', [shapes::Cell { x: 2, y: 1 }].iter().cloned().collect()),
+            ('k', [shapes::Cell(2, 1)].iter().cloned().collect()),
         ]
         .iter()
         .cloned()
@@ -78,13 +78,13 @@ mod tests {
         let expected_candidates = [
             (
                 'e',
-                [shapes::Cell { x: 3, y: 0 }, shapes::Cell { x: 1, y: 1 }]
+                [shapes::Cell(3, 0), shapes::Cell(1, 1)]
                     .iter()
                     .cloned()
                     .collect(),
             ),
-            ('f', [shapes::Cell { x: 3, y: 0 }].iter().cloned().collect()),
-            ('j', [shapes::Cell { x: 1, y: 1 }].iter().cloned().collect()),
+            ('f', [shapes::Cell(3, 0)].iter().cloned().collect()),
+            ('j', [shapes::Cell(1, 1)].iter().cloned().collect()),
         ]
         .iter()
         .cloned()

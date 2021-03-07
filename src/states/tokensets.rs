@@ -14,13 +14,13 @@ impl std::ops::Index<&shapes::Cell> for CellGrid {
     type Output = CellState;
 
     fn index(&self, cell: &shapes::Cell) -> &Self::Output {
-        &self[cell.y][cell.x]
+        &self[cell.1][cell.0]
     }
 }
 
 impl std::ops::IndexMut<&shapes::Cell> for CellGrid {
     fn index_mut(&mut self, cell: &shapes::Cell) -> &mut Self::Output {
-        &mut self[cell.y][cell.x]
+        &mut self[cell.1][cell.0]
     }
 }
 

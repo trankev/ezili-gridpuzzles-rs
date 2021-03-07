@@ -9,10 +9,7 @@ impl Region {
     fn row(position: usize, size: usize) -> Region {
         Region {
             cells: (0..size)
-                .map(move |index| cells::Cell {
-                    x: index,
-                    y: position,
-                })
+                .map(move |index| cells::Cell(index, position))
                 .collect(),
         }
     }
@@ -24,10 +21,7 @@ impl Region {
     fn column(position: usize, size: usize) -> Region {
         Region {
             cells: (0..size)
-                .map(|index| cells::Cell {
-                    x: position,
-                    y: index,
-                })
+                .map(|index| cells::Cell(position, index))
                 .collect(),
         }
     }
@@ -40,10 +34,8 @@ impl Region {
         Region {
             cells: (0..width)
                 .flat_map(|x| {
-                    (0..height).map(move |y| cells::Cell {
-                        x: v_offset * width + x,
-                        y: h_offset * height + y,
-                    })
+                    (0..height)
+                        .map(move |y| cells::Cell(v_offset * width + x, h_offset * height + y))
                 })
                 .collect(),
         }
@@ -71,25 +63,13 @@ mod tests {
         let mut result = Region::rows(3, 3).collect::<Vec<_>>();
         let mut expected = vec![
             Region {
-                cells: vec![
-                    cells::Cell { x: 0, y: 0 },
-                    cells::Cell { x: 1, y: 0 },
-                    cells::Cell { x: 2, y: 0 },
-                ],
+                cells: vec![cells::Cell(0, 0), cells::Cell(1, 0), cells::Cell(2, 0)],
             },
             Region {
-                cells: vec![
-                    cells::Cell { x: 0, y: 1 },
-                    cells::Cell { x: 1, y: 1 },
-                    cells::Cell { x: 2, y: 1 },
-                ],
+                cells: vec![cells::Cell(0, 1), cells::Cell(1, 1), cells::Cell(2, 1)],
             },
             Region {
-                cells: vec![
-                    cells::Cell { x: 0, y: 2 },
-                    cells::Cell { x: 1, y: 2 },
-                    cells::Cell { x: 2, y: 2 },
-                ],
+                cells: vec![cells::Cell(0, 2), cells::Cell(1, 2), cells::Cell(2, 2)],
             },
         ];
         result.sort();
@@ -102,25 +82,13 @@ mod tests {
         let mut result = Region::columns(3, 3).collect::<Vec<_>>();
         let mut expected = vec![
             Region {
-                cells: vec![
-                    cells::Cell { x: 0, y: 0 },
-                    cells::Cell { x: 0, y: 1 },
-                    cells::Cell { x: 0, y: 2 },
-                ],
+                cells: vec![cells::Cell(0, 0), cells::Cell(0, 1), cells::Cell(0, 2)],
             },
             Region {
-                cells: vec![
-                    cells::Cell { x: 1, y: 0 },
-                    cells::Cell { x: 1, y: 1 },
-                    cells::Cell { x: 1, y: 2 },
-                ],
+                cells: vec![cells::Cell(1, 0), cells::Cell(1, 1), cells::Cell(1, 2)],
             },
             Region {
-                cells: vec![
-                    cells::Cell { x: 2, y: 0 },
-                    cells::Cell { x: 2, y: 1 },
-                    cells::Cell { x: 2, y: 2 },
-                ],
+                cells: vec![cells::Cell(2, 0), cells::Cell(2, 1), cells::Cell(2, 2)],
             },
         ];
         result.sort();
@@ -134,34 +102,34 @@ mod tests {
         let mut expected = vec![
             Region {
                 cells: vec![
-                    cells::Cell { x: 0, y: 0 },
-                    cells::Cell { x: 0, y: 1 },
-                    cells::Cell { x: 1, y: 0 },
-                    cells::Cell { x: 1, y: 1 },
+                    cells::Cell(0, 0),
+                    cells::Cell(0, 1),
+                    cells::Cell(1, 0),
+                    cells::Cell(1, 1),
                 ],
             },
             Region {
                 cells: vec![
-                    cells::Cell { x: 2, y: 0 },
-                    cells::Cell { x: 2, y: 1 },
-                    cells::Cell { x: 3, y: 0 },
-                    cells::Cell { x: 3, y: 1 },
+                    cells::Cell(2, 0),
+                    cells::Cell(2, 1),
+                    cells::Cell(3, 0),
+                    cells::Cell(3, 1),
                 ],
             },
             Region {
                 cells: vec![
-                    cells::Cell { x: 0, y: 2 },
-                    cells::Cell { x: 0, y: 3 },
-                    cells::Cell { x: 1, y: 2 },
-                    cells::Cell { x: 1, y: 3 },
+                    cells::Cell(0, 2),
+                    cells::Cell(0, 3),
+                    cells::Cell(1, 2),
+                    cells::Cell(1, 3),
                 ],
             },
             Region {
                 cells: vec![
-                    cells::Cell { x: 2, y: 2 },
-                    cells::Cell { x: 2, y: 3 },
-                    cells::Cell { x: 3, y: 2 },
-                    cells::Cell { x: 3, y: 3 },
+                    cells::Cell(2, 2),
+                    cells::Cell(2, 3),
+                    cells::Cell(3, 2),
+                    cells::Cell(3, 3),
                 ],
             },
         ];
