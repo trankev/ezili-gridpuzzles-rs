@@ -16,7 +16,7 @@ pub fn initialize(
         .map(|tokenset| match tokenset {
             settings::TokenSet::Symbols { grid, candidates } => {
                 let grid = &setting.grids[*grid];
-                initialize_symbolset(grid, candidates, &purpose)
+                initialize_symbolset(grid, candidates.to_string(), &purpose)
             }
         })
         .collect();
@@ -28,12 +28,12 @@ pub fn initialize(
 
 fn initialize_symbolset(
     grid: &settings::Grid,
-    candidates: &[settings::SymbolType],
+    candidates: String,
     purpose: &Purpose,
 ) -> states::Tokenset {
     let default = match purpose {
         Purpose::Playing => states::CellState::Empty,
-        Purpose::Solving => states::CellState::Candidates(candidates.iter().cloned().collect()),
+        Purpose::Solving => states::CellState::Candidates(candidates.chars().collect()),
     };
     let candidates = (0..grid.columns)
         .map(|_| (0..grid.rows).map(|_| default.clone()).collect())

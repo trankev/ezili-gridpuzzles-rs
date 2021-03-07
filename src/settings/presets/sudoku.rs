@@ -23,8 +23,9 @@ pub fn add_symbolset(
     givens: Vec<settings::GivenSymbol>,
 ) -> settings::TokenSetIndex {
     let candidates = (1..=digits)
-        .map(|digit| std::char::from_digit(digit as u32, 10).unwrap())
-        .collect::<Vec<_>>();
+        .map(|digit| digit.to_string())
+        .collect::<Vec<_>>()
+        .join("");
     let category = settings::TokenSet::Symbols { candidates, grid };
     let tokenset = setting.add_symbolset(category);
     let rule = settings::Rule::Sudoku {

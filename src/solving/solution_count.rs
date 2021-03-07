@@ -6,7 +6,7 @@ enum Iterator {
     Symbolset {
         tokenset: usize,
         cell: shapes::Cell,
-        candidates: Vec<settings::SymbolType>,
+        candidates: String,
     },
     Unset,
 }
@@ -42,10 +42,10 @@ fn do_count_solutions(
                 let states::Tokenset::Symbols(cells) = tokenset;
                 cells[&cell].clone()
             };
-            for candidate in &candidates {
+            for candidate in candidates.chars() {
                 let tokenset = &mut state.tokensets[tokenset];
                 let states::Tokenset::Symbols(cells) = tokenset;
-                cells[&cell] = states::CellState::Set(*candidate);
+                cells[&cell] = states::CellState::Set(candidate);
                 result += do_count_solutions(setting, state, constraints)?;
             }
             let tokenset = &mut state.tokensets[tokenset];

@@ -36,8 +36,8 @@ fn iter_sudoku_constraints(
         settings::TokenSet::Symbols { grid, candidates } => {
             grid_index = grid;
             repartition = candidates
-                .iter()
-                .map(|symbol| (*symbol, 1))
+                .chars()
+                .map(|symbol| (symbol, 1))
                 .collect::<std::collections::HashMap<_, _>>();
         }
     };
