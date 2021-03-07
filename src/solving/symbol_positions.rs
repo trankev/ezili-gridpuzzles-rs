@@ -6,7 +6,7 @@ type SymbolPositions =
     std::collections::HashMap<settings::SymbolType, std::collections::HashSet<shapes::Cell>>;
 
 pub fn symbol_positions(
-    cells: &states::CellGrid,
+    #[allow(clippy::ptr_arg)] cells: &states::CellGrid,
     region: &shapes::Region,
 ) -> (SymbolPositions, SymbolPositions) {
     let mut set_positions = SymbolPositions::new();
@@ -16,13 +16,13 @@ pub fn symbol_positions(
             states::CellState::Set(value) => {
                 set_positions
                     .entry(*value)
-                    .or_insert(std::collections::HashSet::new())
+                    .or_insert_with(std::collections::HashSet::new)
                     .insert(cell.clone());
             }
             states::CellState::Candidates(candidates) => candidates.iter().for_each(|candidate| {
                 candidate_positions
                     .entry(*candidate)
-                    .or_insert(std::collections::HashSet::new())
+                    .or_insert_with(std::collections::HashSet::new)
                     .insert(cell.clone());
             }),
             states::CellState::Empty => (),

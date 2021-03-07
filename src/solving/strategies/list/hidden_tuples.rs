@@ -13,7 +13,7 @@ pub struct HiddenTuples {
 impl strategies::Strategy for HiddenTuples {
     fn search(
         &self,
-        constraints: &Vec<settings::Constraint>,
+        constraints: &[settings::Constraint],
         state: &states::State,
     ) -> Result<Vec<strategies::Deduction>, Box<dyn std::error::Error>> {
         let mut result = Vec::new();
@@ -52,7 +52,7 @@ impl HiddenTuples {
         tokenset: settings::TokenSetIndex,
         repartition: &settings::SymbolRepartition,
         region: &shapes::Region,
-        cells: &states::CellGrid,
+        #[allow(clippy::ptr_arg)] cells: &states::CellGrid,
     ) -> Result<Vec<strategies::Deduction>, Box<dyn std::error::Error>> {
         let mut result = Vec::new();
         let (set_positions, mut candidate_positions) = solving::symbol_positions(cells, region);
@@ -106,8 +106,8 @@ impl HiddenTuples {
 
 fn list_actions(
     tokenset: settings::TokenSetIndex,
-    cells: &states::CellGrid,
-    symbols: &Vec<&settings::SymbolType>,
+    #[allow(clippy::ptr_arg)] cells: &states::CellGrid,
+    symbols: &[&settings::SymbolType],
     positions: &std::collections::HashSet<shapes::Cell>,
 ) -> Vec<strategies::Action> {
     if symbols.len() == 1 {
@@ -129,7 +129,7 @@ fn list_actions(
                 Some(
                     candidates
                         .iter()
-                        .map(move |candidate| (position.clone(), candidate.clone())),
+                        .map(move |candidate| (position.clone(), *candidate)),
                 )
             } else {
                 None
@@ -139,7 +139,7 @@ fn list_actions(
         .map(
             |(cell, candidate)| strategies::Action::RemoveSymbolCandidate {
                 tokenset,
-                cell: cell.clone(),
+                cell,
                 symbol: candidate,
             },
         )

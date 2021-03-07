@@ -22,9 +22,6 @@ fn apply_given_symbol(
     symbol: settings::SymbolType,
 ) {
     let tokenset = &mut state.tokensets[tokenset];
-    match tokenset {
-        states::Tokenset::Symbols(cells) => {
-            cells[cell] = states::CellState::Set(symbol);
-        }
-    }
+    let states::Tokenset::Symbols(cells) = tokenset;
+    cells[cell] = states::CellState::Set(symbol);
 }

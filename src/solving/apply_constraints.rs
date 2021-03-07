@@ -5,13 +5,13 @@ use crate::states;
 pub fn apply_constraints(state: &mut states::State, constraints: &[settings::Constraint]) {
     states::apply_constraints(state, constraints);
     for constraint in constraints {
-        match constraint {
-            settings::Constraint::SymbolRepartition {
-                tokenset,
-                region,
-                repartition,
-            } => apply_symbol_repartition(state, *tokenset, region, repartition),
-            _ => (),
+        if let settings::Constraint::SymbolRepartition {
+            tokenset,
+            region,
+            repartition,
+        } = constraint
+        {
+            apply_symbol_repartition(state, *tokenset, region, repartition);
         }
     }
 }

@@ -23,7 +23,7 @@ impl Default for Solver {
 impl Solver {
     pub fn iterate(
         &self,
-        constraints: &Vec<settings::Constraint>,
+        constraints: &[settings::Constraint],
         state: &states::State,
     ) -> Result<Vec<strategies::Deduction>, Box<dyn std::error::Error>> {
         for strategy in &self.strategies {
@@ -32,6 +32,6 @@ impl Solver {
                 return Ok(deductions);
             }
         }
-        return Ok(Vec::new());
+        Ok(Vec::new())
     }
 }
