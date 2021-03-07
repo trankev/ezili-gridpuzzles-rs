@@ -10,7 +10,7 @@ pub enum Category {
     },
 }
 
-#[derive(Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Debug, Eq, Ord, PartialEq, PartialOrd, serde::Deserialize, serde::Serialize)]
 pub enum Action {
     SetSymbol {
         tokenset: settings::TokenSetIndex,

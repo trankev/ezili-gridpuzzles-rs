@@ -156,10 +156,10 @@ mod tests {
     fn test_hidden_pair() -> Result<(), Box<dyn std::error::Error>> {
         let state = states::State {
             tokensets: vec![states::Tokenset::Symbols(vec![vec![
-                states::CellState::Candidates("134".chars().collect()),
-                states::CellState::Candidates("234".chars().collect()),
-                states::CellState::Candidates("12".chars().collect()),
-                states::CellState::Candidates("12".chars().collect()),
+                states::CellState::Candidates("134".to_string()),
+                states::CellState::Candidates("234".to_string()),
+                states::CellState::Candidates("12".to_string()),
+                states::CellState::Candidates("12".to_string()),
             ]])],
         };
 
@@ -173,27 +173,36 @@ mod tests {
         }];
 
         let technique = HiddenTuples::with_fixed_size(2);
-        let result = technique.search(&constraints, &state)?;
-        let expected = vec![strategies::Deduction {
-            category: strategies::Category::HiddenTuple {
-                symbols: "34".to_string(),
-                region,
-                positions: vec![shapes::Cell(0, 0), shapes::Cell(1, 0)],
+        let mut result = technique.search(&constraints, &state)?;
+        assert_eq!(result.len(), 1);
+        let deduction = &mut result[0];
+
+        deduction.actions.sort();
+        let expected_actions = vec![
+            strategies::Action::RemoveSymbolCandidate {
+                tokenset: 0,
+                cell: shapes::Cell(0, 0),
+                symbol: '1',
             },
-            actions: vec![
-                strategies::Action::RemoveSymbolCandidate {
-                    tokenset: 0,
-                    cell: shapes::Cell(0, 0),
-                    symbol: '1',
-                },
-                strategies::Action::RemoveSymbolCandidate {
-                    tokenset: 0,
-                    cell: shapes::Cell(1, 0),
-                    symbol: '2',
-                },
-            ],
-        }];
-        assert_eq!(result, expected);
+            strategies::Action::RemoveSymbolCandidate {
+                tokenset: 0,
+                cell: shapes::Cell(1, 0),
+                symbol: '2',
+            },
+        ];
+        assert_eq!(deduction.actions, expected_actions);
+
+        let strategies::Category::HiddenTuple {
+            symbols,
+            region: found_region,
+            positions,
+        } = &deduction.category;
+        let mut positions = positions.clone();
+        positions.sort();
+        assert_eq!(positions, vec![shapes::Cell(0, 0), shapes::Cell(1, 0)]);
+        assert_eq!(*found_region, region);
+        assert_eq!(*symbols.chars().sorted().join(""), "34".to_string());
+
         Ok(())
     }
 
@@ -201,10 +210,10 @@ mod tests {
     fn test_hidden_single() -> Result<(), Box<dyn std::error::Error>> {
         let state = states::State {
             tokensets: vec![states::Tokenset::Symbols(vec![vec![
-                states::CellState::Candidates("124".chars().collect()),
-                states::CellState::Candidates("1234".chars().collect()),
-                states::CellState::Candidates("124".chars().collect()),
-                states::CellState::Candidates("124".chars().collect()),
+                states::CellState::Candidates("124".to_string()),
+                states::CellState::Candidates("1234".to_string()),
+                states::CellState::Candidates("124".to_string()),
+                states::CellState::Candidates("124".to_string()),
             ]])],
         };
 
@@ -239,10 +248,10 @@ mod tests {
     fn test_no_results() -> Result<(), Box<dyn std::error::Error>> {
         let state = states::State {
             tokensets: vec![states::Tokenset::Symbols(vec![vec![
-                states::CellState::Candidates("12".chars().collect()),
-                states::CellState::Candidates("23".chars().collect()),
-                states::CellState::Candidates("34".chars().collect()),
-                states::CellState::Candidates("14".chars().collect()),
+                states::CellState::Candidates("12".to_string()),
+                states::CellState::Candidates("23".to_string()),
+                states::CellState::Candidates("34".to_string()),
+                states::CellState::Candidates("14".to_string()),
             ]])],
         };
 

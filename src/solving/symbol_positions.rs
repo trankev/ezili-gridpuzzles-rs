@@ -40,13 +40,13 @@ mod tests {
         let cells = vec![
             vec![
                 states::CellState::Set('a'),
-                states::CellState::Candidates(['b', 'c'].iter().cloned().collect()),
+                states::CellState::Candidates("bc".to_string()),
                 states::CellState::Set('a'),
-                states::CellState::Candidates(['e', 'f'].iter().cloned().collect()),
+                states::CellState::Candidates("ef".to_string()),
             ],
             vec![
-                states::CellState::Candidates(['g', 'h'].iter().cloned().collect()),
-                states::CellState::Candidates(['e', 'j'].iter().cloned().collect()),
+                states::CellState::Candidates("gh".to_string()),
+                states::CellState::Candidates("ej".to_string()),
                 states::CellState::Set('k'),
                 states::CellState::Set('l'),
             ],
