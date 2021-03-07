@@ -1,6 +1,7 @@
 use crate::settings;
 use crate::shapes;
 use crate::states;
+use itertools::Itertools;
 
 pub fn apply_constraints(state: &mut states::State, constraints: &[settings::Constraint]) {
     states::apply_constraints(state, constraints);
@@ -49,9 +50,10 @@ fn apply_symbol_repartition(
             for cell in &region.cells {
                 let cell_state = &mut cells[cell];
                 if let states::CellState::Candidates(candidates) = cell_state {
-                    for value in &to_remove {
-                        candidates.remove(value);
-                    }
+                    *candidates = candidates
+                        .chars()
+                        .filter(|candidate| !to_remove.contains(&candidate))
+                        .join("");
                 }
             }
         }

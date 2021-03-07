@@ -4,7 +4,7 @@ use crate::shapes;
 #[derive(Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
 pub enum Category {
     HiddenTuple {
-        symbols: Vec<settings::SymbolType>,
+        symbols: String,
         region: shapes::Region,
         positions: Vec<shapes::Cell>,
     },

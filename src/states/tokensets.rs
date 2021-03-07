@@ -4,7 +4,7 @@ use crate::shapes;
 #[derive(Clone, Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
 pub enum CellState {
     Set(settings::SymbolType),
-    Candidates(std::collections::HashSet<settings::SymbolType>),
+    Candidates(String),
     Empty,
 }
 

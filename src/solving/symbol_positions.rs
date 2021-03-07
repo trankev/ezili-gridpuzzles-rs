@@ -19,9 +19,9 @@ pub fn symbol_positions(
                     .or_insert_with(std::collections::HashSet::new)
                     .insert(cell.clone());
             }
-            states::CellState::Candidates(candidates) => candidates.iter().for_each(|candidate| {
+            states::CellState::Candidates(candidates) => candidates.chars().for_each(|candidate| {
                 candidate_positions
-                    .entry(*candidate)
+                    .entry(candidate)
                     .or_insert_with(std::collections::HashSet::new)
                     .insert(cell.clone());
             }),

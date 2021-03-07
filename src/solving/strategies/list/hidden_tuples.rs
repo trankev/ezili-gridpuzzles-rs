@@ -90,7 +90,7 @@ impl HiddenTuples {
                 if !actions.is_empty() {
                     let deduction = strategies::Deduction {
                         category: strategies::Category::HiddenTuple {
-                            symbols: combination.iter().cloned().cloned().collect(),
+                            symbols: combination.iter().join(""),
                             region: region.clone(),
                             positions: positions.iter().cloned().collect(),
                         },
@@ -128,8 +128,8 @@ fn list_actions(
             if let states::CellState::Candidates(candidates) = &cells[position] {
                 Some(
                     candidates
-                        .iter()
-                        .map(move |candidate| (position.clone(), *candidate)),
+                        .chars()
+                        .map(move |candidate| (position.clone(), candidate)),
                 )
             } else {
                 None
@@ -176,7 +176,7 @@ mod tests {
         let result = technique.search(&constraints, &state)?;
         let expected = vec![strategies::Deduction {
             category: strategies::Category::HiddenTuple {
-                symbols: "34".chars().collect(),
+                symbols: "34".to_string(),
                 region,
                 positions: vec![shapes::Cell(0, 0), shapes::Cell(1, 0)],
             },
@@ -221,7 +221,7 @@ mod tests {
         let result = technique.search(&constraints, &state)?;
         let expected = vec![strategies::Deduction {
             category: strategies::Category::HiddenTuple {
-                symbols: "3".chars().collect(),
+                symbols: "3".to_string(),
                 region,
                 positions: vec![shapes::Cell(1, 0)],
             },
