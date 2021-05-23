@@ -1,7 +1,6 @@
 pub mod settings;
 pub mod shapes;
-pub mod solving;
-pub mod states;
+mod types;
 mod utils;
 
 pub use utils::set_panic_hook;

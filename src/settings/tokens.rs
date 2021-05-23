@@ -1,4 +1,4 @@
-use super::types;
+use crate::types;
 
 #[derive(Debug, serde::Deserialize, serde::Serialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
