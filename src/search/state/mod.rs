@@ -3,4 +3,5 @@ mod state;
 mod tokensets;
 
 pub use grids::Grid;
-pub use tokensets::Tokenset;
+pub use state::SolveState;
+pub use tokensets::TokenSet;
