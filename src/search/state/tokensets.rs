@@ -33,7 +33,7 @@ pub enum TokenSet {
 
 impl TokenSet {
     pub fn from_rule(grid: &settings::Grid, rule: &settings::Rule) -> TokenSet {
-        let candidates = (0..grid.rows)
+        let candidates = (1..=grid.rows)
             .map(|digit| digit.to_string())
             .collect::<Vec<_>>().join("");
         match rule {
