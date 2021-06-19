@@ -1,6 +1,7 @@
 pub mod search;
 pub mod settings;
 pub mod shapes;
+mod dancing_links;
 mod types;
 mod utils;
 
